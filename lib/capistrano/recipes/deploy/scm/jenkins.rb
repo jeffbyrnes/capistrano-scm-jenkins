@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'tmpdir'
 require 'rexml/document'
 
 require 'capistrano/recipes/deploy/scm/base'
@@ -18,8 +19,9 @@ module Capistrano
         end
 
         def checkout(revision, destination)
-          puts repository
-          #scm :checkout, arguments, arguments(:checkout), verbose, authentication, "-r#{revision}", repository, destination
+          curdir = Dir.pwd
+          tmpdir = Dir.mktmpdir
+
         end
 
         private
@@ -36,6 +38,10 @@ module Capistrano
 
         def rss_all
           open(repository + '/rssAll').read()
+        end
+
+        def artifact_zip_url(revision)
+          "#{repository}/#{revision}/artifact/*zip*/archive.zip"
         end
       end
     end
