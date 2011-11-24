@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.version     = Capistrano::Scm::Jenkins::VERSION
   s.authors     = ["LI Daobing"]
   s.email       = ["lidaobing@gmail.com"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.homepage    = "https://github.com/lidaobing/capistrano-scm-jenkins"
+  s.summary     = %q{use jenkins as a capistrano scm}
+  s.description = %q{use jenkins as a capistrano scm}
 
   s.rubyforge_project = "capistrano-scm-jenkins"
 
