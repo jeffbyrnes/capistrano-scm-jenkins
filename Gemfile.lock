@@ -13,6 +13,7 @@ GEM
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.1.0)
+    diff-lcs (1.1.2)
     highline (1.6.2)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -21,9 +22,18 @@ GEM
     net-ssh (2.1.4)
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
+    rspec (2.7.0)
+      rspec-core (~> 2.7.0)
+      rspec-expectations (~> 2.7.0)
+      rspec-mocks (~> 2.7.0)
+    rspec-core (2.7.1)
+    rspec-expectations (2.7.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.7.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   capistrano-scm-jenkins!
+  rspec
