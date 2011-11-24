@@ -23,13 +23,13 @@ module Capistrano
         end
 
         private
-        def get_last_successful_build(message = nil)
+        def last_successful_build(message = nil)
           message = rss_all if message.nil?
           doc = REXML::Document.new(message).root
           REXML::XPath.each(doc,"./entry/title") do |title|
             title = title.text
             if title.end_with? '(back to normal)' or title.end_with? '(stable)':
-              return /#(\d+) \([^(]+$/.match(a)[1]
+              return /#(\d+) \([^(]+$/.match(title)[1]
             end
           end
         end
