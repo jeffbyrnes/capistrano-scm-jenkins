@@ -21,13 +21,11 @@ a sample config/deploy.rb
     set :use_sudo, false
     set :deploy_to, "/home/#{user}/apps/#{application}"
 
-    # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
-
     role :web, "test.example.com"                          # Your HTTP server, Apache/etc
     role :app, "test.example.com"                          # This may be the same as your `Web` server
     role :db,  "test.example.com", :primary => true # This is where Rails migrations will run
 
-for more information on capistrano, check https://github.com/capistrano/capistrano
+for more information about capistrano, check https://github.com/capistrano/capistrano
 
 ## LICENSE
 

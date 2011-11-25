@@ -27,6 +27,8 @@ module Capistrano
           }
         end
 
+        alias_method :export, :checkout
+
         def log(from, to=nil)
           log_build_message(from, to)
           log_scm_message(from, to)
