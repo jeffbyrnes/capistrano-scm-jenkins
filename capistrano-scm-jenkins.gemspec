@@ -9,7 +9,10 @@ Gem::Specification.new do |s|
   s.email       = ["lidaobing@gmail.com"]
   s.homepage    = "https://github.com/lidaobing/capistrano-scm-jenkins"
   s.summary     = %q{use jenkins as a capistrano scm}
-  s.description = %q{use jenkins as a capistrano scm}
+  s.description = %q{
+With this plugin, you can use jenkins build artifact as a repository, and
+deploy your build artifact with capistrano.
+  }
 
   s.rubyforge_project = "capistrano-scm-jenkins"
 

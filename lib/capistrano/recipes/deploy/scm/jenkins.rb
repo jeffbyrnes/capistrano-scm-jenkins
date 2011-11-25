@@ -20,7 +20,7 @@ module Capistrano
         def checkout(revision, destination)
           %Q{TMPDIR=`mktemp -d` &&
             cd "$TMPDIR" &&
-            wget -nv '#{artifact_zip_url(revision)}' &&
+            curl #{authentication} -sO '#{artifact_zip_url(revision)}' &&
             unzip archive.zip &&
             mv archive "#{destination}" &&
             rm -rf "$TMPDIR"
@@ -41,6 +41,14 @@ module Capistrano
         end
 
         private
+
+        def authentication
+          if variable(:scm_username) and variable(:scm_password)
+            "--user '#{variable(:scm_username)}:#{variable(:scm_password)}'"
+          else
+            ""
+          end
+        end
 
         def use_unstable?
           !!variable(:jenkins_use_unstable)
@@ -106,11 +114,23 @@ module Capistrano
         end
 
         def rss_all
-          @rss_all ||= open(repository + '/rssAll').read()
+          begin
+            @rss_all ||= open(repository + '/rssAll', auth_opts).read()
+          rescue => e
+            raise Capistrano::Error, "open url #{repository + '/rssAll'} failed: #{e}"
+          end
         end
 
         def rss_changelog
-          @rss_changelog ||= open(repository + '/rssChangelog').read()
+          @rss_changelog ||= open(repository + '/rssChangelog', auth_opts).read()
+        end
+
+        def auth_opts
+          if variable(:scm_username) and variable(:scm_username)
+            {:http_basic_authentication => [variable(:scm_username), variable(:scm_password)]}
+          else
+            {}
+          end
         end
 
         def artifact_zip_url(revision)

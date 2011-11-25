@@ -17,8 +17,14 @@ a sample config/deploy.rb
     set :repository,  "http://jenkins.example.com/job/example/"
 
     set :scm, :jenkins
+
     # uncomment following line if you want deploy unstable version
     # set :jenkins_use_unstable, true
+
+    # jenkins username and password
+    # set :scm_username, ENV['JENKINS_USERNAME']
+    # set :scm_password, ENV['JENKINS_PASSWORD']
+
     set :user, 'lidaobing'
     set :use_sudo, false
     set :deploy_to, "/home/#{user}/apps/#{application}"
