@@ -9,7 +9,7 @@ module Capistrano
     module SCM
       class Jenkins < Base
         def head
-          last_successful_build
+          last_deploy_build
         end
 
         def query_revision(revision)
@@ -41,6 +41,10 @@ module Capistrano
         end
 
         private
+
+        def use_unstable?
+          !!variable(:jenkins_use_unstable)
+        end
 
         def log_build_message(from, to=nil, message=nil)
           message = rss_all if message.nil?
@@ -75,13 +79,19 @@ module Capistrano
           end
         end
 
-        def last_successful_build(message = nil)
+        def last_deploy_build(message = nil, opts={})
           message = rss_all if message.nil?
+          use_unstable = opts[:use_unstable]
+          use_unstable = use_unstable? if use_unstable.nil?
           doc = REXML::Document.new(message).root
+          valid_end_strings = ['(back to normal)', '(stable)']
+          if use_unstable
+            valid_end_strings << '(unstable)'
+          end
           REXML::XPath.each(doc,"./entry/title") do |title|
             title = title.text
-            if title.end_with? '(back to normal)' or title.end_with? '(stable)':
-              return get_build_number_from_rss_all_title(title)
+            for x in valid_end_strings:
+              return get_build_number_from_rss_all_title(title) if title.end_with? x
             end
           end
           raise 'can not find a build suitable for deploy'
