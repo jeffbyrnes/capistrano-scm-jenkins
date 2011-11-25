@@ -41,11 +41,6 @@ for the maven module, you should include the module name in your repository url.
 
     set :repository,  "http://jenkins.example.com/job/example/com.example.helloworld$helloworld/"
 
-## TODO
-
-* how to deal with auth? (need help)
-* support unstable build
-
 ## LICENSE
 
 Permission is hereby granted, free of charge, to any person obtaining
