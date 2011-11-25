@@ -18,11 +18,11 @@ module Capistrano
         end
 
         def checkout(revision, destination)
-          %Q{TMPDIR=`mktemp -d`;
-            cd "$TMPDIR";
-            wget '#{artifact_zip_url(revision)}';
-            unzip archive.zip;
-            mv archive "#{destination}";
+          %Q{TMPDIR=`mktemp -d` &&
+            cd "$TMPDIR" &&
+            wget -nv '#{artifact_zip_url(revision)}' &&
+            unzip archive.zip &&
+            mv archive "#{destination}" &&
             rm -rf "$TMPDIR"
           }
         end
