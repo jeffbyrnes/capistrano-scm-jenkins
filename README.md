@@ -27,6 +27,17 @@ a sample config/deploy.rb
 
 for more information about capistrano, check https://github.com/capistrano/capistrano
 
+### maven module
+
+for the maven module, you should include the module name in your repository url. for example:
+
+    set :repository,  "http://jenkins.example.com/job/example/com.example.helloworld$helloworld/"
+
+## TODO
+
+* how to deal with auth? (need help)
+* support unstable build
+
 ## LICENSE
 
 Permission is hereby granted, free of charge, to any person obtaining
