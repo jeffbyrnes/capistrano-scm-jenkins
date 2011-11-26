@@ -98,7 +98,7 @@ module Capistrano
           end
           REXML::XPath.each(doc,"./entry/title") do |title|
             title = title.text
-            for x in valid_end_strings:
+            for x in valid_end_strings
               return get_build_number_from_rss_all_title(title) if title.end_with? x
             end
           end
