@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    capistrano-scm-jenkins (0.0.1)
+    capistrano-scm-jenkins (0.0.2)
       capistrano
 
 GEM

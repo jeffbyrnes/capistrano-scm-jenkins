@@ -1,4 +1,4 @@
-## 0.0.2 (TBD)
+## 0.0.2 (2011-11-26)
 
 * honor :scm_username and :scm_password
 * fix syntax bug under ruby 1.9
