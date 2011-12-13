@@ -19,11 +19,17 @@ a sample config/deploy.rb
     set :scm, :jenkins
 
     # uncomment following line if you want deploy unstable version
-    # set :jenkins_use_unstable, true
+    #   set :jenkins_use_unstable, true
 
     # jenkins username and password
-    # set :scm_username, ENV['JENKINS_USERNAME']
-    # set :scm_password, ENV['JENKINS_PASSWORD']
+    #   set :scm_username, ENV['JENKINS_USERNAME']
+    #   set :scm_password, ENV['JENKINS_PASSWORD']
+    # or use the netrc support for curl
+    #   set :jenkins_use_netrc, true
+    #
+    # if you use netrc, add the following line in your $HOME/.netrc
+    #   machine jenkins.example.com login USERNAME password secret
+
 
     set :user, 'lidaobing'
     set :use_sudo, false

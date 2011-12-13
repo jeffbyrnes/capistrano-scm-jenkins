@@ -23,5 +23,6 @@ deploy your build artifact with capistrano.
 
   # specify any dependencies here; for example:
   s.add_runtime_dependency "capistrano"
+  s.add_runtime_dependency "net-netrc"
   s.add_development_dependency "rspec"
 end

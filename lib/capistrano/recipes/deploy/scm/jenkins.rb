@@ -3,6 +3,7 @@ require 'tmpdir'
 require 'rexml/document'
 
 require 'capistrano/recipes/deploy/scm/base'
+require 'net/netrc'
 
 module Capistrano
   module Deploy
@@ -43,7 +44,9 @@ module Capistrano
         private
 
         def authentication
-          if variable(:scm_username) and variable(:scm_password)
+          if variable(:jenkins_use_netrc)
+            "--netrc"
+          elsif variable(:scm_username) and variable(:scm_password)
             "--user '#{variable(:scm_username)}:#{variable(:scm_password)}'"
           else
             ""
@@ -126,8 +129,8 @@ module Capistrano
         end
 
         def auth_opts
-          if variable(:scm_username) and variable(:scm_username)
-            {:http_basic_authentication => [variable(:scm_username), variable(:scm_password)]}
+          if jenkins_username and jenkins_password
+            {:http_basic_authentication => [jenkins_username, jenkins_password]}
           else
             {}
           end
@@ -135,6 +138,38 @@ module Capistrano
 
         def artifact_zip_url(revision)
           "#{repository}/#{revision}/artifact/*zip*/archive.zip"
+        end
+
+        def jenkins_username
+          @jenkins_username ||= begin
+                                  if variable(:jenkins_use_netrc)
+                                    rc = Net::Netrc.locate(jenkins_hostname)
+                                    raise ".netrc missing or no entry found" if rc.nil?
+                                    rc.login
+                                  elsif variable(:scm_username)
+                                    variable(:scm_username)
+                                  else
+                                    nil
+                                  end
+                                end
+        end
+
+        def jenkins_password
+          @jenkins_password ||= begin
+                                  if variable(:jenkins_use_netrc)
+                                    rc = Net::Netrc.locate(jenkins_hostname)
+                                    raise ".netrc missing or no entry found" if rc.nil?
+                                    rc.password
+                                  elsif variable(:scm_password)
+                                    variable(:scm_password)
+                                  else
+                                    nil
+                                  end
+                                end
+        end
+
+        def jenkins_hostname
+          @jenkins_hostname ||= URI.parse(repository).host
         end
       end
     end
