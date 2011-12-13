@@ -1,4 +1,4 @@
-## 0.0.3 (XXXX-XX-XX)
+## 0.0.3 (2011-12-13)
 
 * support netrc
 

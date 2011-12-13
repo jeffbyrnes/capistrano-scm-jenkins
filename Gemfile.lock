@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    capistrano-scm-jenkins (0.0.2)
+    capistrano-scm-jenkins (0.0.3)
       capistrano
       net-netrc
 
