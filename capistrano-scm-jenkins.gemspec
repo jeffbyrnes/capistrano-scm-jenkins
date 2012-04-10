@@ -25,4 +25,5 @@ deploy your build artifact with capistrano.
   s.add_runtime_dependency "capistrano"
   s.add_runtime_dependency "net-netrc"
   s.add_development_dependency "rspec"
+  s.add_development_dependency "rake"
 end
