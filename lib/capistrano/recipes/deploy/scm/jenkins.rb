@@ -57,7 +57,7 @@ module Capistrano
           # HACK: rather than using shell commands to download / extract and
           # move files, use something cross platform, and fake a shell success
           # this does break the benchmarking of the system call, but oh well
-          return 'exit 0'
+          return 'true'
         end
 
         alias_method :export, :checkout
