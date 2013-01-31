@@ -2,6 +2,7 @@ require 'open-uri'
 require 'tmpdir'
 require 'rexml/document'
 
+require 'capistrano/logger'
 require 'capistrano/recipes/deploy/scm/base'
 require 'net/netrc'
 require 'fileutils'
@@ -42,7 +43,7 @@ module Capistrano
               zip_path = open(download_url, options).path
             end
 
-            $stderr.puts("Extracting #{zip_path} to #{destination}")
+            logger.info("Extracting #{zip_path} to #{destination}")
             Zip::ZipFile.open(zip_path) do |zipfile|
               zipfile.each { |e|
                 fpath = File.join(destination, e.to_s)
@@ -56,7 +57,7 @@ module Capistrano
           # HACK: rather than using shell commands to download / extract and
           # move files, use something cross platform, and fake a shell success
           # this does break the benchmarking of the system call, but oh well
-          return 'exit 0'
+          return 'true'
         end
 
         alias_method :export, :checkout
