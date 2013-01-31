@@ -1,3 +1,7 @@
+## 0.0.5 (2013-01-31)
+
+* works under Windows (thanks @Iristyle)
+
 ## 0.0.4 (2012-06-21)
 
 * working with non-English server (thanks cynipe).
