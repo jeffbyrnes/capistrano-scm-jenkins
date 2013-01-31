@@ -4,6 +4,9 @@ require 'rexml/document'
 
 require 'capistrano/recipes/deploy/scm/base'
 require 'net/netrc'
+require 'fileutils'
+require 'open-uri'
+require 'zip/zip'
 
 module Capistrano
   module Deploy
@@ -19,13 +22,41 @@ module Capistrano
         end
 
         def checkout(revision, destination)
-          %Q{TMPDIR=`mktemp -d` &&
-            cd "$TMPDIR" &&
-            curl #{authentication} -sO '#{artifact_zip_url(revision)}' &&
-            unzip archive.zip &&
-            mv archive "#{destination}" &&
-            rm -rf "$TMPDIR"
+          download_url = artifact_zip_url(revision)
+          Dir.mktmpdir { |dir|
+            if variable(:jenkins_use_netrc)
+              zip_path = File.expand_path(File.join(dir, 'archive.zip'))
+              `curl #{authentication} -sO '#{download_url}'`
+              if $?.exitstatus != 0
+                raise "could not execute curl"
+              end
+            else
+              options = {
+                "User-Agent" => "capistrano-scm-jenkins@capistrano",
+                "Referer" => "https://github.com/lidaobing/capistrano-scm-jenkins"
+              }
+              if variable(:scm_username) and variable(:scm_password)
+                options[:http_basic_authentication] = [variable(:scm_username), variable(:scm_password)]
+              end
+
+              zip_path = open(download_url, options).path
+            end
+
+            $stderr.puts("Extracting #{zip_path} to #{destination}")
+            Zip::ZipFile.open(zip_path) do |zipfile|
+              zipfile.each { |e|
+                fpath = File.join(destination, e.to_s)
+                FileUtils.mkdir_p(File.dirname(fpath))
+                # true to overwrite existing files
+                zipfile.extract(e, fpath){ true }
+              }
+            end
           }
+
+          # HACK: rather than using shell commands to download / extract and
+          # move files, use something cross platform, and fake a shell success
+          # this does break the benchmarking of the system call, but oh well
+          return 'exit 0'
         end
 
         alias_method :export, :checkout
