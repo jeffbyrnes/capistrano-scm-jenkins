@@ -153,14 +153,14 @@ module Capistrano
 
         def rss_all
           begin
-            @rss_all ||= open(repository + '/rssAll', accept_language.merge(auth_opts)).read()
+            @rss_all ||= open(repository + '/rssAll', accept_language.merge(auth_opts).merge(ssl_opts)).read()
           rescue => e
             raise Capistrano::Error, "open url #{repository + '/rssAll'} failed: #{e}"
           end
         end
 
         def rss_changelog
-          @rss_changelog ||= open(repository + '/rssChangelog', accept_language.merge(auth_opts)).read()
+          @rss_changelog ||= open(repository + '/rssChangelog', accept_language.merge(auth_opts).merge(ssl_opts)).read()
         end
 
         def accept_language
@@ -170,6 +170,14 @@ module Capistrano
         def auth_opts
           if jenkins_username and jenkins_password
             {:http_basic_authentication => [jenkins_username, jenkins_password]}
+          else
+            {}
+          end
+        end
+
+        def ssl_opts
+          if variable(:jenkins_insecure)
+            {:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE}
           else
             {}
           end
