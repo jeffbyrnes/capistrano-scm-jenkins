@@ -18,46 +18,33 @@ module Capistrano
         end
 
         def query_revision(revision)
-          return revision if revision =~ /^\d+$/
+          return revision if revision.to_s =~ /^\d+$/
           raise "invalid revision: #{revision}"
         end
 
         def checkout(revision, destination)
-          download_url = artifact_zip_url(revision)
-          Dir.mktmpdir { |dir|
-            if variable(:jenkins_use_netrc)
-              zip_path = File.expand_path(File.join(dir, 'archive.zip'))
-              `curl #{authentication} -sO '#{download_url}'`
-              if $?.exitstatus != 0
-                raise "could not execute curl"
-              end
-            else
-              options = {
-                "User-Agent" => "capistrano-scm-jenkins@capistrano",
-                "Referer" => "https://github.com/lidaobing/capistrano-scm-jenkins"
-              }
-              if variable(:scm_username) and variable(:scm_password)
-                options[:http_basic_authentication] = [variable(:scm_username), variable(:scm_password)]
-              end
+          execute = []
 
-              zip_path = open(download_url, options).path
-            end
+          unless destination.end_with?('/')
+            destination = destination.to_s + '/'
+          end
 
-            logger.info("Extracting #{zip_path} to #{destination}")
-            Zip::ZipFile.open(zip_path) do |zipfile|
-              zipfile.each { |e|
-                fpath = File.join(destination, e.to_s)
-                FileUtils.mkdir_p(File.dirname(fpath))
-                # true to overwrite existing files
-                zipfile.extract(e, fpath){ true }
-              }
-            end
-          }
+          execute << 'TMPDIR=`mktemp -d`'
+          execute << 'cd $TMPDIR'
+          execute << "curl #{curl_interface} #{insecure} #{authentication} -sO '#{artifact_zip_url(revision)}'"
+          if variable(:jenkins_artifact_path)
+            execute << 'unzip archive.zip -d \'out/\''
+            execute << "mv out/#{variable(:jenkins_artifact_path)} #{destination}"
+          else
+            execute << "unzip archive.zip -d \"#{destination}\""
 
-          # HACK: rather than using shell commands to download / extract and
-          # move files, use something cross platform, and fake a shell success
-          # this does break the benchmarking of the system call, but oh well
-          return 'true'
+          end
+          execute << 'rm -rf "$TMPDIR"'
+
+          execute.compact.join(' && ').gsub(/\s+/, ' ')
+        rescue ArgumentError => e
+          logger.log(Logger::IMPORTANT, e.message)
+          exit
         end
 
         alias_method :export, :checkout
@@ -85,6 +72,22 @@ module Capistrano
           end
         end
 
+        def insecure
+          if variable(:jenkins_insecure)
+            '--insecure'
+          else
+            ''
+          end
+        end
+
+        def curl_interface
+          if variable(:jenkins_curl_interface)
+            "--interface '#{variable(:jenkins_curl_interface)}'"
+          else
+            ''
+          end
+        end
+
         def use_unstable?
           !!variable(:jenkins_use_unstable)
         end
@@ -95,7 +98,7 @@ module Capistrano
           logger.info ''
           logger.info "BUILD LOG"
           logger.info '========='
-          REXML::XPath.each(doc,"./entry") do |entry|
+          REXML::XPath.each(doc, "./entry") do |entry|
             title = REXML::XPath.first(entry, "./title").text
             time = REXML::XPath.first(entry, "./updated").text
             build_number = get_build_number_from_rss_all_title(title).to_i
@@ -110,7 +113,7 @@ module Capistrano
           doc = REXML::Document.new(message).root
           logger.info "SCM LOG"
           logger.info '======='
-          REXML::XPath.each(doc,"./entry") do |entry|
+          REXML::XPath.each(doc, "./entry") do |entry|
             title = REXML::XPath.first(entry, "./title").text
             time = REXML::XPath.first(entry, "./updated").text
             content = REXML::XPath.first(entry, "./content").text
@@ -131,7 +134,7 @@ module Capistrano
           if use_unstable
             valid_end_strings << '(unstable)'
           end
-          REXML::XPath.each(doc,"./entry/title") do |title|
+          REXML::XPath.each(doc, "./entry/title") do |title|
             title = title.text
             for x in valid_end_strings
               return get_build_number_from_rss_all_title(title) if title.end_with? x
@@ -178,30 +181,30 @@ module Capistrano
 
         def jenkins_username
           @jenkins_username ||= begin
-                                  if variable(:jenkins_use_netrc)
-                                    rc = Net::Netrc.locate(jenkins_hostname)
-                                    raise ".netrc missing or no entry found" if rc.nil?
-                                    rc.login
-                                  elsif variable(:scm_username)
-                                    variable(:scm_username)
-                                  else
-                                    nil
-                                  end
-                                end
+            if variable(:jenkins_use_netrc)
+              rc = Net::Netrc.locate(jenkins_hostname)
+              raise ".netrc missing or no entry found" if rc.nil?
+              rc.login
+            elsif variable(:scm_username)
+              variable(:scm_username)
+            else
+              nil
+            end
+          end
         end
 
         def jenkins_password
           @jenkins_password ||= begin
-                                  if variable(:jenkins_use_netrc)
-                                    rc = Net::Netrc.locate(jenkins_hostname)
-                                    raise ".netrc missing or no entry found" if rc.nil?
-                                    rc.password
-                                  elsif variable(:scm_password)
-                                    variable(:scm_password)
-                                  else
-                                    nil
-                                  end
-                                end
+            if variable(:jenkins_use_netrc)
+              rc = Net::Netrc.locate(jenkins_hostname)
+              raise ".netrc missing or no entry found" if rc.nil?
+              rc.password
+            elsif variable(:scm_password)
+              variable(:scm_password)
+            else
+              nil
+            end
+          end
         end
 
         def jenkins_hostname
