@@ -18,7 +18,7 @@ module Capistrano
         end
 
         def query_revision(revision)
-          return revision if revision =~ /^\d+$/
+          return revision if revision.to_s =~ /^\d+$/
           raise "invalid revision: #{revision}"
         end
 
