@@ -34,7 +34,7 @@ module Capistrano
           execute << "curl #{curl_interface} #{insecure} #{authentication} -sO '#{artifact_zip_url(revision)}'"
           if variable(:jenkins_artifact_path)
             execute << 'mkdir out'
-            execute << "unzip archive.zip -d \"./out\""
+            execute << "unzip archive.zip -d \"./out/\""
             execute << "mv out/#{variable(:jenkins_artifact_path)} #{destination}"
           else
             execute << "unzip archive.zip -d \"#{destination}\""
