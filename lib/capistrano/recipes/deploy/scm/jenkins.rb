@@ -28,8 +28,7 @@ module Capistrano
           execute << 'TMPDIR=`mktemp -d`'
           execute << 'cd $TMPDIR'
           execute << "curl #{curl_interface} #{insecure} #{authentication} -sO '#{artifact_zip_url(revision)}'"
-          execute << 'unzip archive.zip'
-          execute << "mv archive \"#{destination}\""
+          execute << "unzip archive.zip -d \"#{destination}\""
           execute << 'rm -rf "$TMPDIR"'
 
           execute.compact.join(' && ').gsub(/\s+/, ' ')
