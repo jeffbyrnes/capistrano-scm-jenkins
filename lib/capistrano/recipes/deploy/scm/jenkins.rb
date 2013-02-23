@@ -27,7 +27,7 @@ module Capistrano
 
           execute << 'TMPDIR=`mktemp -d`'
           execute << 'cd $TMPDIR'
-          execute << "curl #{authentication} -sO '#{artifact_zip_url(revision)}'"
+          execute << "curl #{insecure} #{authentication} -sO '#{artifact_zip_url(revision)}'"
           execute << 'rm -rf "$TMPDIR"'
           execute << 'unzip archive.zip'
           execute << "mv archive \"#{destination}\""
@@ -60,6 +60,14 @@ module Capistrano
             "--user '#{variable(:scm_username)}:#{variable(:scm_password)}'"
           else
             ""
+          end
+        end
+
+        def insecure
+          if variable(:jenkins_insecure)
+            '--insecure'
+          else
+            ''
           end
         end
 
