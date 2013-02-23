@@ -25,6 +25,10 @@ module Capistrano
         def checkout(revision, destination)
           execute = []
 
+          unless destination.end_with?('/')
+            destination = destination.to_s + '/'
+          end
+
           execute << 'TMPDIR=`mktemp -d`'
           execute << 'cd $TMPDIR'
           execute << "curl #{curl_interface} #{insecure} #{authentication} -sO '#{artifact_zip_url(revision)}'"
