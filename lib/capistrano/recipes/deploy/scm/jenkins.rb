@@ -28,7 +28,13 @@ module Capistrano
           execute << 'TMPDIR=`mktemp -d`'
           execute << 'cd $TMPDIR'
           execute << "curl #{curl_interface} #{insecure} #{authentication} -sO '#{artifact_zip_url(revision)}'"
-          execute << "unzip archive.zip -d \"#{destination}\""
+          if variable(:jenkins_artifact_path)
+            execute << "unzip archive.zip -d \".\""
+            execute << "mv archive/#{variable(:jenkins_artifact_path)} #{destination}"
+          else
+            execute << "unzip archive.zip -d \"#{destination}\""
+
+          end
           execute << 'rm -rf "$TMPDIR"'
 
           execute.compact.join(' && ').gsub(/\s+/, ' ')
