@@ -28,9 +28,9 @@ module Capistrano
           execute << 'TMPDIR=`mktemp -d`'
           execute << 'cd $TMPDIR'
           execute << "curl #{insecure} #{authentication} -sO '#{artifact_zip_url(revision)}'"
-          execute << 'rm -rf "$TMPDIR"'
           execute << 'unzip archive.zip'
           execute << "mv archive \"#{destination}\""
+          execute << 'rm -rf "$TMPDIR"'
 
           execute.compact.join(' && ').gsub(/\s+/, ' ')
         rescue ArgumentError => e
