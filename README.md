@@ -31,6 +31,12 @@ a sample config/deploy.rb
     #
     # if you use netrc, add the following line in your $HOME/.netrc
     #   machine jenkins.example.com login USERNAME password secret
+    # 
+    # bypass ssl verification
+    #   set :jenkins_insecure, true
+    #
+    # deploy from artifact subfolder. (ex: mv zipout/#{:jenkins_artifact_path} #{destination})
+    #   set :jenkins_artifact_path, 'archive'
 
 
     set :user, 'lidaobing'
