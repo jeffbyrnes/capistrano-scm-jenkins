@@ -1,3 +1,7 @@
+## 0.0.6 (2013-0319)
+
+* [#1, #7] support https  (thanks @lostintime)
+
 ## 0.0.5 (2013-01-31)
 
 * works under Windows (thanks @Iristyle)

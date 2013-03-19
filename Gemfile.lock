@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    capistrano-scm-jenkins (0.0.5)
+    capistrano-scm-jenkins (0.0.6)
       capistrano
       net-netrc
       rubyzip
