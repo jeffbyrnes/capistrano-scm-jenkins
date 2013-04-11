@@ -31,8 +31,11 @@ module Capistrano
 
           execute << 'TMPDIR=`mktemp -d`'
           execute << 'cd $TMPDIR'
-          execute << "curl #{curl_interface} #{insecure} #{authentication} -sO '#{artifact_zip_url(revision)}'"
-          if variable(:jenkins_artifact_path)
+          execute << "curl #{curl_interface} #{insecure} #{authentication} -sO '#{artifact_url(revision)}'"
+          if artifact = variable(:jenkins_artifact_file)
+            execute << "mkdir '#{destination}'"
+            execute << "mv #{File.basename(artifact)} '#{destination}'"
+          elsif variable(:jenkins_artifact_path)
             execute << 'unzip archive.zip -d \'out/\''
             execute << "mv out/#{variable(:jenkins_artifact_path)} #{destination}"
           else
@@ -183,8 +186,12 @@ module Capistrano
           end
         end
 
-        def artifact_zip_url(revision)
-          "#{repository}/#{revision}/artifact/*zip*/archive.zip"
+        def artifact_url(revision)
+          if artifact = variable(:jenkins_artifact_file)
+            "#{repository}/#{revision}/artifact/#{artifact}"
+          else
+            "#{repository}/#{revision}/artifact/*zip*/archive.zip"
+          end
         end
 
         def jenkins_username
