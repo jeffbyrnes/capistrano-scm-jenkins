@@ -37,7 +37,10 @@ a sample config/deploy.rb
     #
     # deploy from artifact subfolder. (ex: mv zipout/#{:jenkins_artifact_path} #{destination})
     #   set :jenkins_artifact_path, 'archive'
-
+    #
+    # deploy a single file.
+    #   set :jenkins_artifact_file, 'webapp.war'
+    #
 
     set :user, 'lidaobing'
     set :use_sudo, false
