@@ -13,42 +13,44 @@ deploy your build artifact with capistrano.
 
 a sample config/deploy.rb
 
-    require 'capistrano-scm-jenkins'
+```ruby
+require 'capistrano-scm-jenkins'
 
-    set :application, "example"
-    set :repository,  "http://jenkins.example.com/job/example/"
+set :application, "example"
+set :repository,  "http://jenkins.example.com/job/example/"
 
-    set :scm, :jenkins
+set :scm, :jenkins
 
-    # uncomment following line if you want deploy unstable version
-    #   set :jenkins_use_unstable, true
+# uncomment following line if you want deploy unstable version
+#   set :jenkins_use_unstable, true
 
-    # jenkins username and password
-    #   set :scm_username, ENV['JENKINS_USERNAME']
-    #   set :scm_password, ENV['JENKINS_PASSWORD']
-    # or use the netrc support for curl
-    #   set :jenkins_use_netrc, true
-    #
-    # if you use netrc, add the following line in your $HOME/.netrc
-    #   machine jenkins.example.com login USERNAME password secret
-    # 
-    # bypass ssl verification
-    #   set :jenkins_insecure, true
-    #
-    # deploy from artifact subfolder. (ex: mv zipout/#{:jenkins_artifact_path} #{destination})
-    #   set :jenkins_artifact_path, 'archive'
-    #
-    # deploy a single file.
-    #   set :jenkins_artifact_file, 'webapp.war'
-    #
+# jenkins username and password
+#   set :scm_username, ENV['JENKINS_USERNAME']
+#   set :scm_password, ENV['JENKINS_PASSWORD']
+# or use the netrc support for curl
+#   set :jenkins_use_netrc, true
+#
+# if you use netrc, add the following line in your $HOME/.netrc
+#   machine jenkins.example.com login USERNAME password secret
+#
+# bypass ssl verification
+#   set :jenkins_insecure, true
+#
+# deploy from artifact subfolder. (ex: mv zipout/#{:jenkins_artifact_path} #{destination})
+#   set :jenkins_artifact_path, 'archive'
+#
+# deploy a single file.
+#   set :jenkins_artifact_file, 'webapp.war'
+#
 
-    set :user, 'lidaobing'
-    set :use_sudo, false
-    set :deploy_to, "/home/#{user}/apps/#{application}"
+set :user, 'lidaobing'
+set :use_sudo, false
+set :deploy_to, "/home/#{user}/apps/#{application}"
 
-    role :web, "test.example.com"                          # Your HTTP server, Apache/etc
-    role :app, "test.example.com"                          # This may be the same as your `Web` server
-    role :db,  "test.example.com", :primary => true # This is where Rails migrations will run
+role :web, "test.example.com"                          # Your HTTP server, Apache/etc
+role :app, "test.example.com"                          # This may be the same as your `Web` server
+role :db,  "test.example.com", :primary => true # This is where Rails migrations will run
+```
 
 for more information about capistrano, check https://github.com/capistrano/capistrano
 
@@ -56,7 +58,9 @@ for more information about capistrano, check https://github.com/capistrano/capis
 
 for the maven module, you should include the module name in your repository url. for example:
 
-    set :repository,  "http://jenkins.example.com/job/example/com.example.helloworld$helloworld/"
+```ruby
+set :repository,  "http://jenkins.example.com/job/example/com.example.helloworld$helloworld/"
+```
 
 ## LICENSE
 
