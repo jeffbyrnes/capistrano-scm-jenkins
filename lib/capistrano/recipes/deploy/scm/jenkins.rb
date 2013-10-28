@@ -158,8 +158,8 @@ module Capistrano
           return title if title[-1] != ')'
           count = 1
           (title.size-2).downto(0).each do |idx|
-            count += 1 if title[idx] == ')'
-            count -= 1 if title[idx] == '('
+            count += 1 if title.slice(idx, 1) == ')'
+            count -= 1 if title.slice(idx, 1) == '('
             return title.slice(0, idx) if count == 0
           end
           return ""
