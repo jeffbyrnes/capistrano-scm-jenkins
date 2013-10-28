@@ -155,7 +155,7 @@ module Capistrano
         end
 
         def strip_right_parentheses(title)
-          return title if title[-1] != ')'
+          return title if title.slice(title.size-1, 1) != ')'
           count = 1
           (title.size-2).downto(0).each do |idx|
             count += 1 if title.slice(idx, 1) == ')'
