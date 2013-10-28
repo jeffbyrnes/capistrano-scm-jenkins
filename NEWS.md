@@ -1,4 +1,8 @@
-## 0.0.6 (2013-0319)
+## 0.0.7 (2013-10-28)
+
+* [#9] fix crash on strange title
+
+## 0.0.6 (2013-03-19)
 
 * [#1, #7] support https  (thanks @lostintime)
 

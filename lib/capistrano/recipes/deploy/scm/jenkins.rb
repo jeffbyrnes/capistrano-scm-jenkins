@@ -147,11 +147,22 @@ module Capistrano
         end
 
         def get_build_number_from_rss_all_title(title)
-          /#(\d+) \([^(]+$/.match(title)[1]
+          /#(\d+) /.match(strip_right_parentheses(title))[1]
         end
 
         def get_build_number_from_rss_changelog_title(title)
           /^#(\d+) /.match(title)[1]
+        end
+
+        def strip_right_parentheses(title)
+          return title if title.slice(title.size-1, 1) != ')'
+          count = 1
+          (title.size-2).downto(0).each do |idx|
+            count += 1 if title.slice(idx, 1) == ')'
+            count -= 1 if title.slice(idx, 1) == '('
+            return title.slice(0, idx) if count == 0
+          end
+          return ""
         end
 
         def rss_all

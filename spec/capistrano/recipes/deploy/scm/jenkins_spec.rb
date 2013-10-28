@@ -28,5 +28,27 @@ module Capistrano::Deploy::SCM
         @jenkins.send(:last_deploy_build, msg, :use_unstable => true).should == '1450'
       end
     end
+
+    context 'get_build_number_from_rss_all_title' do
+      {
+        "account #22 (1 more test is failing (total 19))" => 22,
+        "account #37 (stable)" => 37
+      }.each do |text, build_number|
+        it "should convert `#{text}` to `#{build_number}`" do
+          @jenkins.send(:get_build_number_from_rss_all_title, text).should == "#{build_number}"
+        end
+      end
+    end
+
+    context 'strip_right_parentheses' do
+      {
+        "account #22 (1 more test is failing (total 19))" => "account #22 ",
+        "account #37 (stable)" => "account #37 "
+      }.each do |from, to|
+        it "should convert `#{from}` to `#{to}" do
+          @jenkins.send(:strip_right_parentheses, from).should == to
+        end
+      end
+    end
   end
 end
