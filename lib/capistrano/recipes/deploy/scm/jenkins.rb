@@ -7,7 +7,7 @@ require 'capistrano/recipes/deploy/scm/base'
 require 'net/netrc'
 require 'fileutils'
 require 'open-uri'
-require 'zip/zip'
+require 'zip'
 
 module Capistrano
   module Deploy

@@ -22,9 +22,9 @@ deploy your build artifact with capistrano.
   s.require_paths = ["lib"]
 
   # specify any dependencies here; for example:
-  s.add_runtime_dependency "capistrano"
+  s.add_runtime_dependency "capistrano", "~> 2.0"
   s.add_runtime_dependency "net-netrc"
-  s.add_runtime_dependency "rubyzip"
+  s.add_runtime_dependency "rubyzip", "~> 1.0"
   s.add_development_dependency "rspec"
   s.add_development_dependency "rake"
 end
