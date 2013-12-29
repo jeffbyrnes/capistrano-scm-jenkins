@@ -1,3 +1,7 @@
+## 0.0.8 (2013-12-29)
+
+* [#11] filter scm log with prefix
+
 ## 0.0.7 (2013-10-28)
 
 * [#9] fix crash on strange title
@@ -22,7 +26,6 @@
 
 * honor :scm_username and :scm_password
 * fix syntax bug under ruby 1.9
-
 
 ## 0.0.1 (2011-11-25)
 

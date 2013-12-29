@@ -45,8 +45,20 @@ module Capistrano::Deploy::SCM
         "account #22 (1 more test is failing (total 19))" => "account #22 ",
         "account #37 (stable)" => "account #37 "
       }.each do |from, to|
-        it "should convert `#{from}` to `#{to}" do
+        it "should convert `#{from}` to `#{to}`" do
           @jenkins.send(:strip_right_parentheses, from).should == to
+        end
+      end
+    end
+
+    context 'scm_message_useful?' do
+      {
+        "a" => true,
+        "b" => false,
+        "b\na\n" => true
+      }.each do |from, to|
+        it "should treat `#{from}` as #{to ? "useful" : "not useful"}" do
+          @jenkins.send(:scm_message_useful?, from, "a").should == to
         end
       end
     end

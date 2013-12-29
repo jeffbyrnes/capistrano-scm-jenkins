@@ -42,8 +42,10 @@ set :scm, :jenkins
 # deploy a single file.
 #   set :jenkins_artifact_file, 'webapp.war'
 #
+# filter the scm log with prefix when deploy:pending
+#   set :jenkins_scm_log_prefix, 'project_name/'
 
-set :user, 'lidaobing'
+set :user, 'username'
 set :use_sudo, false
 set :deploy_to, "/home/#{user}/apps/#{application}"
 
