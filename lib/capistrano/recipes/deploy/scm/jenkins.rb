@@ -121,11 +121,21 @@ module Capistrano
             time = REXML::XPath.first(entry, "./updated").text
             content = REXML::XPath.first(entry, "./content").text
             build_number = get_build_number_from_rss_changelog_title(title).to_i
-            if build_number > from.to_i and (to.nil? or build_number <= to.to_i)
+            if build_number > from.to_i \
+              and (to.nil? or build_number <= to.to_i) \
+              and scm_message_useful?(content, variable(:jenkins_scm_log_prefix))
               logger.info "#{time}\t#{title}"
               logger.info "#{content}"
             end
           end
+        end
+
+        def scm_message_useful?(content, prefix)
+          return true if prefix.nil?
+          content.each_line do |line|
+            return true if line.start_with? prefix
+          end
+          false
         end
 
         def last_deploy_build(message = nil, opts={})
