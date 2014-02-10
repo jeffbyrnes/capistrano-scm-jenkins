@@ -5,14 +5,11 @@ require 'capistrano-scm-jenkins/version'
 
 Gem::Specification.new do |s|
   s.name          = 'capistrano-scm-jenkins'
-  s.version       = Capistrano::JenkinsScm::VERSION
+  s.version       = CapistranoScmJenkins::VERSION
   s.authors       = ['LI Daobing', 'Jeff Byrnes']
   s.email         = ['lidaobing@gmail.com', 'jeff@evertrue.com']
-  s.summary       = %q{use jenkins as a capistrano scm}
-  s.description   = %q{
-With this plugin, you can use jenkins build artifact as a repository, and
-deploy your build artifact with capistrano.
-  }
+  s.summary       = %q{Use Jenkins as a Capistrano 3.x SCM.}
+  s.description   = %q{Capistrano 3.x plugin to deploy Jenkins artifacts.}
   s.homepage      = "https://github.com/lidaobing/#{s.name}"
   s.license       = 'MIT'
 
@@ -23,11 +20,10 @@ deploy your build artifact with capistrano.
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ['lib']
 
-  s.add_runtime_dependency     'capistrano', '~> 2.0'
-  s.add_runtime_dependency     'net-netrc'
-  s.add_runtime_dependency     'rubyzip', '~> 0.0'
+  s.add_dependency 'capistrano', '~> 3.1'
 
   s.add_development_dependency 'bundler', '~> 1.5'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
+  s.add_development_dependency 'mocha'
 end

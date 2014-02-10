@@ -1,4 +1,4 @@
-# Capistrano::JenkinsScm
+# Capistrano::Jenkins
 
 [![Build Status](https://secure.travis-ci.org/lidaobing/capistrano-scm-jenkins.png?branch=master)](http://travis-ci.org/lidaobing/capistrano-scm-jenkins) [![Gem Version](https://badge.fury.io/rb/capistrano-scm-jenkins.png)](http://badge.fury.io/rb/capistrano-scm-jenkins)
 
@@ -8,74 +8,51 @@ Allows Capistrano to treat Jenkins as an SCM, deploying artifacts from a specifi
 
 Add this line to your application's Gemfile:
 
-    gem 'capistrano-jenkins_scm'
+```ruby
+gem 'capistrano-scm-jenkins'
+```
 
 And then execute:
 
-    $ bundle
+```bash
+$ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install capistrano-jenkins_scm
+```bash
+$ gem install capistrano-scm-jenkins
+```
 
 ## Usage
 
-a sample config/deploy.rb
+In your `Capfile`, you’ll need to `require 'capistrano-scm-jenkins`.
+
+A sample `config/deploy.rb`:
 
 ```ruby
-require 'capistrano-scm-jenkins'
+set :application, 'my-sweet-app'
+set :repo_url, 'http://my.jenkins.install/job/my-sweet-app'
+set :deploy_to, "/home/#{fetch(:user)}/#{fetch(:application)}"
 
-set :application, "example"
-set :repository,  "http://jenkins.example.com/job/example/"
+# Jenkins username & password
+set :jenkins_user, 'user'
+set :jenkins_pass, 'pass'
 
-set :scm, :jenkins
-
-# uncomment following line if you want deploy unstable version
-#   set :jenkins_use_unstable, true
-
-# jenkins username and password
-#   set :scm_username, ENV['JENKINS_USERNAME']
-#   set :scm_password, ENV['JENKINS_PASSWORD']
-# or use the netrc support for curl
-#   set :jenkins_use_netrc, true
+# Deploy from artifact subfolder. (ex: mv zipout/#{:jenkins_artifact_path} #{destination})
+# set :jenkins_artifact_path, 'archive'
 #
-# if you use netrc, add the following line in your $HOME/.netrc
-#   machine jenkins.example.com login USERNAME password secret
+# Deploy a single file.
+# set :jenkins_artifact_file, 'my-api/target/webapp.war'
 #
-# bypass ssl verification
-#   set :jenkins_insecure, true
-#
-# deploy from artifact subfolder. (ex: mv zipout/#{:jenkins_artifact_path} #{destination})
-#   set :jenkins_artifact_path, 'archive'
-#
-# deploy a single file.
-#   set :jenkins_artifact_file, 'webapp.war'
-#
-# filter the scm log with prefix when deploy:pending
-#   set :jenkins_scm_log_prefix, 'project_name/'
-
-set :user, 'username'
-set :use_sudo, false
-set :deploy_to, "/home/#{user}/apps/#{application}"
-
-role :web, "test.example.com"                          # Your HTTP server, Apache/etc
-role :app, "test.example.com"                          # This may be the same as your `Web` server
-role :db,  "test.example.com", :primary => true # This is where Rails migrations will run
+# Bypass SSL verification
+# set :jenkins_insecure, true
 ```
 
-for more information about capistrano, check https://github.com/capistrano/capistrano
-
-### maven module
-
-for the maven module, you should include the module name in your repository url. for example:
-
-```ruby
-set :repository,  "http://jenkins.example.com/job/example/com.example.helloworld$helloworld/"
-```
 
 ## Contributing
 
-1. Fork it ( http://github.com/evertrue/capistrano-jenkins_scm/fork )
+1. Fork it ( http://github.com/evertrue/capistrano-scm-jenkins/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
