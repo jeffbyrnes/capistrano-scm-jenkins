@@ -1,3 +1,10 @@
+## 0.1.0 (2014-02-11)
+
+* Initial version for Capistrano 3
+    * Removes certain features:
+        * `:jenkins_use_unstable`
+        * `:jenkins_scm_log_prefix`
+
 ## 0.0.8 (2013-12-29)
 
 * [#11] filter scm log with prefix
