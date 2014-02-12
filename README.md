@@ -49,6 +49,13 @@ set :jenkins_pass, 'pass'
 # set :jenkins_insecure, true
 ```
 
+### maven module
+
+For a Maven module, you should include the module name in the `:repo_url`:
+
+```ruby
+set :repo_url,  "http://jenkins.example.com/job/example/com.example.helloworld$helloworld/"
+```
 
 ## Contributing
 
