@@ -101,7 +101,7 @@ class Capistrano::Jenkins < Capistrano::SCM
       if build_status == 'success'
         true
       else
-        abort 'Latest build status isn’t green!'
+        abort 'Latest build status isn\'t green!'
       end
     end
 
