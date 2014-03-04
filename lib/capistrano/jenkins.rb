@@ -98,7 +98,7 @@ class Capistrano::Jenkins < Capistrano::SCM
 
       set :current_revision, "build #{last_build_number}"
 
-      if build_status == 'success'
+      if %w(success unstable).include? build_status
         true
       else
         abort 'Latest build status isn\'t green!'
