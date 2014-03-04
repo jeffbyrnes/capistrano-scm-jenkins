@@ -1,3 +1,8 @@
+## 0.2.0 (2014-03-04)
+
+* Allow unstable, but successful, builds to deploy
+* Tweak "no green builds" message to not use higher-byte character
+
 ## 0.1.0 (2014-02-11)
 
 * Initial version for Capistrano 3
