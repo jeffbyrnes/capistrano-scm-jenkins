@@ -29,6 +29,16 @@ class Capistrano::Jenkins < Capistrano::SCM
     end
   end
 
+  def allowed_statuses
+    statuses = %w(success)
+
+    @allowed_statuses ||= begin
+      statuses << 'unstable' if fetch(:jenkins_use_unstable)
+
+      statuses
+    end
+  end
+
   def ssl_opts
     if fetch(:jenkins_insecure)
       { ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE }
@@ -98,7 +108,7 @@ class Capistrano::Jenkins < Capistrano::SCM
 
       set :current_revision, "build #{last_build_number}"
 
-      if %w(success unstable).include? build_status
+      if allowed_statuses.include? build_status
         true
       else
         abort 'Latest build status isn\'t green!'
