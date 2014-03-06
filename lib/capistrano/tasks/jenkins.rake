@@ -20,7 +20,7 @@ namespace :jenkins do
         info t(:mirror_exists, at: repo_path)
       else
         within deploy_path do
-          debug "We’re not cloning anything, just creating #{repo_path}"
+          debug "We're not cloning anything, just creating #{repo_path}"
           strategy.clone
         end
       end

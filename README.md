@@ -39,6 +39,9 @@ set :deploy_to, "/home/#{fetch(:user)}/#{fetch(:application)}"
 set :jenkins_user, 'user'
 set :jenkins_pass, 'pass'
 
+# Allow the deployment of unstable versions
+# set :jenkins_use_unstable, true
+
 # Deploy from artifact subfolder. (ex: mv zipout/#{:jenkins_artifact_path} #{destination})
 # set :jenkins_artifact_path, 'archive'
 #
