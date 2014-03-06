@@ -1,4 +1,4 @@
-## 0.2.0 (2014-03-04)
+## 0.2.0 (2014-03-06)
 
 * Allow unstable, but successful, builds to deploy
 * Tweak "no green builds" message to not use higher-byte character
