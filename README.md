@@ -1,6 +1,7 @@
 # Capistrano::Jenkins
 
-[![Build Status](https://secure.travis-ci.org/lidaobing/capistrano-scm-jenkins.png?branch=master)](http://travis-ci.org/lidaobing/capistrano-scm-jenkins) [![Gem Version](https://badge.fury.io/rb/capistrano-scm-jenkins.png)](http://badge.fury.io/rb/capistrano-scm-jenkins)
+[![Build Status](https://secure.travis-ci.org/lidaobing/capistrano-scm-jenkins.png?branch=master)](http://travis-ci.org/lidaobing/capistrano-scm-jenkins) [![Gem Version](https://badge.fury.io/rb/capistrano-scm-jenkins.png)](http://badge.fury.io/rb/capistrano-scm-jenkins) [![Dependency Status](https://gemnasium.com/lidaobing/capistrano-scm-jenkins.png)](https://gemnasium.com/lidaobing/capistrano-scm-jenkins)
+
 
 Allows Capistrano to treat Jenkins as an SCM, deploying artifacts from a specified job.
 
