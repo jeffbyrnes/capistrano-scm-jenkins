@@ -1,4 +1,8 @@
-## 0.3.0 (2014-05-21)
+## 0.3.1 (2014-05-21)
+
+* Ensure gemspec dependencies are properly set for Cap ~> 3.2.1
+
+## 0.3.0 (2014-05-21) (unpublished)
 
 * Refactor to be compatible with Capistrano ~> 3.2
 
