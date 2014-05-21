@@ -106,8 +106,6 @@ class Capistrano::Jenkins < Capistrano::SCM
       res          = jenkins_api_res
       build_status = res['result'].downcase
 
-      set :current_revision, "build #{last_build_number}"
-
       if allowed_statuses.include? build_status
         true
       else
@@ -130,6 +128,10 @@ class Capistrano::Jenkins < Capistrano::SCM
 
     def release
       context.execute :cp, "#{fetch(:application)}#{artifact_ext}", release_path
+    end
+
+    def fetch_revision
+      "build #{last_build_number}"
     end
   end
 end
