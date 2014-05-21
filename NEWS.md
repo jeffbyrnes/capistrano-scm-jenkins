@@ -1,3 +1,7 @@
+## 0.2.1 (2014-05-21)
+
+* Identical to 0.2.0, creating after accidentally yanking 0.2.0 from RubyGems
+
 ## 0.2.0 (2014-03-06)
 
 * Allow unstable, but successful, builds to deploy
