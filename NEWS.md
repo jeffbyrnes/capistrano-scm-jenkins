@@ -1,3 +1,7 @@
+## 0.3.0 (2014-05-21)
+
+* Refactor to be compatible with Capistrano ~> 3.2
+
 ## 0.2.0 (2014-03-06)
 
 * Allow unstable, but successful, builds to deploy
