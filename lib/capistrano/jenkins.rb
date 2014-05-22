@@ -73,7 +73,7 @@ class Capistrano::Jenkins < Capistrano::SCM
 
   def artifact_url
     artifact            = fetch(:jenkins_artifact_file)
-    artifact_url_prefix = "#{repo_url}/lastBuild/artifact"
+    artifact_url_prefix = "#{repo_url}/lastSuccessfulBuild/artifact"
 
     if artifact
       "#{artifact_url_prefix}/#{artifact}"
@@ -87,7 +87,7 @@ class Capistrano::Jenkins < Capistrano::SCM
   end
 
   def jenkins_api_res
-    jenkins_job_api_url = "#{repo_url}/lastBuild/api/json"
+    jenkins_job_api_url = "#{repo_url}/lastSuccessfulBuild/api/json"
 
     res ||= open(jenkins_job_api_url, auth_opts.merge(ssl_opts)).read
 
