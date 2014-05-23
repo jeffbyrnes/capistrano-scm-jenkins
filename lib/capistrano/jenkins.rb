@@ -123,7 +123,8 @@ class Capistrano::Jenkins < Capistrano::SCM
     def update
       # grab the newest artifact
       context.execute :curl, "--silent --fail --show-error #{curl_auth} " +
-        "#{artifact_url} -o #{fetch(:application)}#{artifact_ext}"
+        "#{artifact_url} -o #{fetch(:application)}#{artifact_ext} " +
+        "#{"--insecure" if fetch(:jenkins_insecure)}"
     end
 
     def release
