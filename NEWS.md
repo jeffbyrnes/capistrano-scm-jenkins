@@ -1,3 +1,7 @@
+## 0.3.2 (2014-05-23)
+
+* Fix bypassing of SSL verification using cURL (thanks @xsk)
+
 ## 0.3.1 (2014-05-21)
 
 * Ensure gemspec dependencies are properly set for Cap ~> 3.2.1
