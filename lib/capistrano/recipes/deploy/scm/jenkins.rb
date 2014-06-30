@@ -29,7 +29,7 @@ module Capistrano
             destination = destination.to_s + '/'
           end
 
-          execute << 'TMPDIR=`mktemp -d`'
+          execute << 'TMPDIR=`mktemp -d 2>/dev/null || mktemp -d -t .deploy_tempdir`'
           execute << 'cd $TMPDIR'
           execute << "curl #{curl_interface} #{insecure} #{authentication} -sO '#{artifact_url(revision)}'"
           if artifact = variable(:jenkins_artifact_file)
