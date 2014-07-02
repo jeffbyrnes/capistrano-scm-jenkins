@@ -1,3 +1,7 @@
+## 0.0.9 (2014-07-02)
+
+* #20 Fix `mktemp` issue in OS X (thanks to @mcspring)
+
 ## 0.0.8 (2013-12-29)
 
 * [#11] filter scm log with prefix
