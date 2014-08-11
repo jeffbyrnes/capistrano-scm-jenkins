@@ -108,6 +108,12 @@ class Capistrano::Jenkins < Capistrano::SCM
       build_status = res['result'].downcase
 
       if allowed_statuses.include? build_status
+        if artifact_is_archive?
+          unless test! "hash unzip 2>/dev/null"
+            abort 'unzip required, but not found'
+          end
+        end
+
         true
       else
         abort 'Latest build status isn\'t green!'
@@ -131,18 +137,15 @@ class Capistrano::Jenkins < Capistrano::SCM
     def release
       downloaded_artifact = "#{fetch(:application)}#{artifact_ext}"
 
-      cmd = []
       if artifact_is_archive?
         # is an archive - unpack and deploy
-        cmd << "rm -rf out/"
-        cmd << "unzip \"#{downloaded_artifact}\" -d out/"
-        cmd << "mv out/#{fetch(:jenkins_artifact_path, "*")} \"#{release_path}\""
-        cmd << "rm -rf out/"
+        context.execute :rm, "-rf \"out/\""
+        context.execute :unzip, "\"#{downloaded_artifact}\" -d out/"
+        context.execute :mv, "out/#{fetch(:jenkins_artifact_path, "*")} \"#{release_path}\""
+        context.execute :rm, "-rf \"out/\""
       else
-        cmd << "cp \"#{downloaded_artifact}\" \"#{release_path}\""
+        context.execute "cp \"#{downloaded_artifact}\" \"#{release_path}\""
       end
-
-      context.execute cmd.compact.join(' && ').gsub(/\s+/, ' ')
     end
 
     def fetch_revision
