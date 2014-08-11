@@ -63,8 +63,12 @@ class Capistrano::Jenkins < Capistrano::SCM
     end
   end
 
+  def artifact_file_opt
+    fetch(:jenkins_artifact_file, "*zip*/archive.zip")
+  end
+
   def artifact_filename
-    @artifact_filename = File.basename(fetch(:jenkins_artifact_file))
+    @artifact_filename = File.basename(artifact_file_opt)
   end
 
   def artifact_ext
@@ -72,14 +76,7 @@ class Capistrano::Jenkins < Capistrano::SCM
   end
 
   def artifact_url
-    artifact            = fetch(:jenkins_artifact_file)
-    artifact_url_prefix = "#{repo_url}/lastBuild/artifact"
-
-    if artifact
-      "#{artifact_url_prefix}/#{artifact}"
-    else
-      "#{artifact_url_prefix}/*zip*/archive.zip"
-    end
+    "#{repo_url}/lastBuild/artifact/#{artifact_file_opt}"
   end
 
   def last_build_number
