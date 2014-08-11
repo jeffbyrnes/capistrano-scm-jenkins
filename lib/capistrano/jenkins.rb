@@ -124,29 +124,29 @@ class Capistrano::Jenkins < Capistrano::SCM
     def update
       # grab the newest artifact
       context.execute :curl, "--silent --fail --show-error #{curl_auth} " +
-        "#{artifact_url} -o #{repo_path}/#{fetch(:application)}#{artifact_ext} " +
+        "#{artifact_url} -o #{fetch(:application)}#{artifact_ext} " +
         "#{"--insecure" if fetch(:jenkins_insecure)}"
     end
 
     def release
-      downloaded_artifact = "#{repo_path}/#{fetch(:application)}#{artifact_ext}"
+      downloaded_artifact = "#{fetch(:application)}#{artifact_ext}"
 
       cmd = []
       if artifact_is_archive?
         # is an archive - unpack and deploy
-        cmd << "rm -rf \"#{repo_path}/out/\""
-        cmd << "unzip #{downloaded_artifact} -d \"#{repo_path}/out/\""
-        cmd << "mv #{repo_path}/out/#{fetch(:jenkins_artifact_path, "*")} #{release_path}"
-        cmd << "rm -rf \"#{repo_path}/out/\""
+        cmd << "rm -rf out/"
+        cmd << "unzip \"#{downloaded_artifact}\" -d out/"
+        cmd << "mv out/#{fetch(:jenkins_artifact_path, "*")} \"#{release_path}\""
+        cmd << "rm -rf out/"
       else
-        cmd << "cp \"#{downloaded_artifact}\" #{release_path}"
+        cmd << "cp \"#{downloaded_artifact}\" \"#{release_path}\""
       end
 
       context.execute cmd.compact.join(' && ').gsub(/\s+/, ' ')
     end
 
     def fetch_revision
-      "#{last_build_number}"
+      "build-#{last_build_number}"
     end
   end
 end
