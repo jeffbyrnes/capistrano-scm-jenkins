@@ -144,7 +144,7 @@ class Capistrano::Jenkins < Capistrano::SCM
         context.execute :mv, "out/#{fetch(:jenkins_artifact_path, "*")} \"#{release_path}\""
         context.execute :rm, "-rf \"out/\""
       else
-        context.execute :cp, "\"#{downloaded_artifact}\" \"#{release_path}\""
+        context.execute :cp, downloaded_artifact, release_path
       end
     end
 
