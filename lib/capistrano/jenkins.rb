@@ -79,16 +79,20 @@ class Capistrano::Jenkins < Capistrano::SCM
     @artifact_ext = File.extname(artifact_filename)
   end
 
-  def artifact_url
-    "#{repo_url}/lastBuild/artifact/#{artifact_file_opt}"
+  def artifact_build_number_opt
+    fetch(:jenkins_build_number, 'lastSuccessfulBuild')
   end
 
-  def last_build_number
-    @last_build_number = jenkins_api_res['number']
+  def artifact_build_number
+    @artifact_build_number ||= jenkins_api_res['number']
+  end
+
+  def artifact_url
+    "#{repo_url}/#{artifact_build_number_opt}/artifact/#{artifact_file_opt}"
   end
 
   def jenkins_api_res
-    jenkins_job_api_url = "#{repo_url}/lastBuild/api/json"
+    jenkins_job_api_url = "#{repo_url}/#{artifact_build_number_opt}/api/json"
 
     res ||= open(jenkins_job_api_url, auth_opts.merge(ssl_opts)).read
 
@@ -149,7 +153,7 @@ class Capistrano::Jenkins < Capistrano::SCM
     end
 
     def fetch_revision
-      "build-#{last_build_number}"
+      "build-#{artifact_build_number}"
     end
   end
 end
