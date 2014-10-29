@@ -1,6 +1,10 @@
-## 0.3.2 (2014-05-23)
+## 0.3.3 (2014-05-23)
 
 * Fix bypassing of SSL verification using cURL (thanks @xsk)
+
+## 0.3.2 (2014-05-21)
+
+* Properly bump gem version (same changes as v0.3.1)
 
 ## 0.3.1 (2014-05-21)
 
