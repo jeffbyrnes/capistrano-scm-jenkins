@@ -1,3 +1,7 @@
+## 0.4.0 (2014-10-29)
+
+* Change default for `:jenkins_artifact_file` to `*zip*/archive.zip` (h/t @lostintime on #22)
+
 ## 0.3.3 (2014-05-23)
 
 * Fix bypassing of SSL verification using cURL (thanks @xsk)
