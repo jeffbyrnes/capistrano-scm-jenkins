@@ -63,31 +63,36 @@ class Capistrano::Jenkins < Capistrano::SCM
     end
   end
 
+  def artifact_is_zip?
+    artifact_ext == ".zip"
+  end
+
+  def artifact_file_opt
+    fetch(:jenkins_artifact_file, "*zip*/archive.zip")
+  end
+
   def artifact_filename
-    @artifact_filename = File.basename(fetch(:jenkins_artifact_file))
+    @artifact_filename = File.basename(artifact_file_opt)
   end
 
   def artifact_ext
     @artifact_ext = File.extname(artifact_filename)
   end
 
-  def artifact_url
-    artifact            = fetch(:jenkins_artifact_file)
-    artifact_url_prefix = "#{repo_url}/lastBuild/artifact"
-
-    if artifact
-      "#{artifact_url_prefix}/#{artifact}"
-    else
-      "#{artifact_url_prefix}/*zip*/archive.zip"
-    end
+  def artifact_build_number_opt
+    fetch(:jenkins_build_number, 'lastBuild')
   end
 
-  def last_build_number
-    @last_build_number = jenkins_api_res['number']
+  def artifact_build_number
+    @artifact_build_number ||= jenkins_api_res['number']
+  end
+
+  def artifact_url
+    "#{repo_url}/#{artifact_build_number_opt}/artifact/#{artifact_file_opt}"
   end
 
   def jenkins_api_res
-    jenkins_job_api_url = "#{repo_url}/lastBuild/api/json"
+    jenkins_job_api_url = "#{repo_url}/#{artifact_build_number_opt}/api/json"
 
     res ||= open(jenkins_job_api_url, auth_opts.merge(ssl_opts)).read
 
@@ -107,6 +112,12 @@ class Capistrano::Jenkins < Capistrano::SCM
       build_status = res['result'].downcase
 
       if allowed_statuses.include? build_status
+        if artifact_is_zip?
+          unless test! "hash unzip 2>/dev/null"
+            abort 'unzip required, but not found'
+          end
+        end
+
         true
       else
         abort 'Latest build status isn\'t green!'
@@ -128,11 +139,21 @@ class Capistrano::Jenkins < Capistrano::SCM
     end
 
     def release
-      context.execute :cp, "#{fetch(:application)}#{artifact_ext}", release_path
+      downloaded_artifact = "#{fetch(:application)}#{artifact_ext}"
+
+      if artifact_is_zip?
+        # is an archive - unpack and deploy
+        context.execute :rm, "-rf \"out/\""
+        context.execute :unzip, "\"#{downloaded_artifact}\" -d out/"
+        context.execute :mv, "out/#{fetch(:jenkins_artifact_path, "*")} \"#{release_path}\""
+        context.execute :rm, "-rf \"out/\""
+      else
+        context.execute :cp, downloaded_artifact, release_path
+      end
     end
 
     def fetch_revision
-      "build #{last_build_number}"
+      "build-#{artifact_build_number}"
     end
   end
 end
