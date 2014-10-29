@@ -63,8 +63,8 @@ class Capistrano::Jenkins < Capistrano::SCM
     end
   end
 
-  def artifact_is_archive?
-    fetch(:jenkins_artifact_file).nil?
+  def artifact_is_zip?
+    artifact_ext == ".zip"
   end
 
   def artifact_file_opt
@@ -80,7 +80,7 @@ class Capistrano::Jenkins < Capistrano::SCM
   end
 
   def artifact_build_number_opt
-    fetch(:jenkins_build_number, 'lastSuccessfulBuild')
+    fetch(:jenkins_build_number, 'lastBuild')
   end
 
   def artifact_build_number
@@ -112,7 +112,7 @@ class Capistrano::Jenkins < Capistrano::SCM
       build_status = res['result'].downcase
 
       if allowed_statuses.include? build_status
-        if artifact_is_archive?
+        if artifact_is_zip?
           unless test! "hash unzip 2>/dev/null"
             abort 'unzip required, but not found'
           end
@@ -141,7 +141,7 @@ class Capistrano::Jenkins < Capistrano::SCM
     def release
       downloaded_artifact = "#{fetch(:application)}#{artifact_ext}"
 
-      if artifact_is_archive?
+      if artifact_is_zip?
         # is an archive - unpack and deploy
         context.execute :rm, "-rf \"out/\""
         context.execute :unzip, "\"#{downloaded_artifact}\" -d out/"
