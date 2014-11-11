@@ -1,3 +1,9 @@
+## 0.5.0 (2014-11-11)
+
+* Clean up some Ruby code, thanks to RuboCop
+* Provide a mechanism, using `:deployed_artifact_filename`, to control the name of the deployed artifact’s filename
+    - Ties in nicely with [`capistrano-jetty`](https://github.com/evertrue/capistrano-jetty) & [`capistrano-storm`](https://github.com/evertrue/capistrano-storm)
+
 ## 0.4.0 (2014-10-29)
 
 * Change default for `:jenkins_artifact_file` to `*zip*/archive.zip` (h/t @lostintime on #22)
