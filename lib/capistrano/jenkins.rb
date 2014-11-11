@@ -134,21 +134,19 @@ class Capistrano::Jenkins < Capistrano::SCM
     def update
       # grab the newest artifact
       context.execute :curl, "--silent --fail --show-error #{curl_auth} " \
-        "#{artifact_url} -o #{fetch(:application)}#{artifact_ext} " \
+        "#{artifact_url} -o #{fetch(:deployed_artifact_filename, artifact_filename)} " \
         "#{'--insecure' if fetch(:jenkins_insecure)}"
     end
 
     def release
-      downloaded_artifact = "#{fetch(:application)}#{artifact_ext}"
-
       if artifact_is_zip?
         # is an archive - unpack and deploy
         context.execute :rm, '-rf', 'out'
-        context.execute :unzip, downloaded_artifact, '-d', 'out/'
+        context.execute :unzip, fetch(:deployed_artifact_filename, artifact_filename), '-d', 'out/'
         context.execute :mv, "out/#{fetch(:jenkins_artifact_path, '*')}", release_path
         context.execute :rm, '-rf', 'out'
       else
-        context.execute :cp, downloaded_artifact, release_path
+        context.execute :cp, fetch(:deployed_artifact_filename, artifact_filename), release_path
       end
     end
 
