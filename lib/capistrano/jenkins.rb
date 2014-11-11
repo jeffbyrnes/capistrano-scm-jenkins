@@ -143,10 +143,10 @@ class Capistrano::Jenkins < Capistrano::SCM
 
       if artifact_is_zip?
         # is an archive - unpack and deploy
-        context.execute :rm, "-rf \"out/\""
-        context.execute :unzip, "\"#{downloaded_artifact}\" -d out/"
-        context.execute :mv, "out/#{fetch(:jenkins_artifact_path, "*")} \"#{release_path}\""
-        context.execute :rm, "-rf \"out/\""
+        context.execute :rm, '-rf', 'out'
+        context.execute :unzip, downloaded_artifact, '-d', 'out/'
+        context.execute :mv, "out/#{fetch(:jenkins_artifact_path, '*')}", release_path
+        context.execute :rm, '-rf', 'out'
       else
         context.execute :cp, downloaded_artifact, release_path
       end
