@@ -64,11 +64,11 @@ class Capistrano::Jenkins < Capistrano::SCM
   end
 
   def artifact_is_zip?
-    artifact_ext == ".zip"
+    artifact_ext == '.zip'
   end
 
   def artifact_file_opt
-    fetch(:jenkins_artifact_file, "*zip*/archive.zip")
+    fetch(:jenkins_artifact_file, '*zip*/archive.zip')
   end
 
   def artifact_filename
@@ -113,7 +113,7 @@ class Capistrano::Jenkins < Capistrano::SCM
 
       if allowed_statuses.include? build_status
         if artifact_is_zip?
-          unless test! "hash unzip 2>/dev/null"
+          unless test! 'hash unzip 2>/dev/null'
             abort 'unzip required, but not found'
           end
         end
@@ -135,7 +135,7 @@ class Capistrano::Jenkins < Capistrano::SCM
       # grab the newest artifact
       context.execute :curl, "--silent --fail --show-error #{curl_auth} " \
         "#{artifact_url} -o #{fetch(:application)}#{artifact_ext} " \
-        "#{"--insecure" if fetch(:jenkins_insecure)}"
+        "#{'--insecure' if fetch(:jenkins_insecure)}"
     end
 
     def release
