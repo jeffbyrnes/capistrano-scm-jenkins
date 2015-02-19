@@ -49,6 +49,9 @@ set :jenkins_pass, 'pass'
 # Deploy a single file.
 # set :jenkins_artifact_file, 'my-api/target/webapp.war'
 #
+# Deploy a specific build number
+# set(:jenkins_build_number, ENV['REVISION']) if ENV['REVISION']
+#
 # Bypass SSL verification
 # set :jenkins_insecure, true
 ```

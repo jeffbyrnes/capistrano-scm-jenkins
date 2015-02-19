@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ['lib']
 
-  s.add_dependency 'capistrano', '~> 3.1'
+  s.add_dependency 'capistrano', '~> 3.2.1'
 
   s.add_development_dependency 'bundler', '~> 1.5'
   s.add_development_dependency 'rake'

@@ -1,3 +1,29 @@
+## 0.5.0 (2014-11-11)
+
+* Clean up some Ruby code, thanks to RuboCop
+* Provide a mechanism, using `:deployed_artifact_filename`, to control the name of the deployed artifact’s filename
+    - Ties in nicely with [`capistrano-jetty`](https://github.com/evertrue/capistrano-jetty) & [`capistrano-storm`](https://github.com/evertrue/capistrano-storm)
+
+## 0.4.0 (2014-10-29)
+
+* Change default for `:jenkins_artifact_file` to `*zip*/archive.zip` (h/t @lostintime on #22)
+
+## 0.3.3 (2014-05-23)
+
+* Fix bypassing of SSL verification using cURL (thanks @xsk)
+
+## 0.3.2 (2014-05-21)
+
+* Properly bump gem version (same changes as v0.3.1)
+
+## 0.3.1 (2014-05-21)
+
+* Ensure gemspec dependencies are properly set for Cap ~> 3.2.1
+
+## 0.3.0 (2014-05-21) (unpublished)
+
+* Refactor to be compatible with Capistrano ~> 3.2
+
 ## 0.2.0 (2014-03-06)
 
 * Allow unstable, but successful, builds to deploy
