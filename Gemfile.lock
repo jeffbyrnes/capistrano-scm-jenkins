@@ -2,24 +2,23 @@ PATH
   remote: .
   specs:
     capistrano-scm-jenkins (0.5.0)
-      capistrano (~> 3.2.1)
+      capistrano (~> 3.2)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    capistrano (3.2.1)
+    capistrano (3.4.0)
       i18n
       rake (>= 10.0.0)
       sshkit (~> 1.3)
-    colorize (0.7.3)
     diff-lcs (1.2.5)
-    i18n (0.6.11)
+    i18n (0.7.0)
     metaclass (0.0.4)
     mocha (1.1.0)
       metaclass (~> 0.0.1)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
-    net-ssh (2.9.1)
+    net-ssh (3.1.0)
     rake (10.3.2)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
@@ -33,8 +32,7 @@ GEM
     rspec-mocks (3.1.3)
       rspec-support (~> 3.1.0)
     rspec-support (3.1.2)
-    sshkit (1.5.1)
-      colorize
+    sshkit (1.9.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
 
@@ -48,3 +46,6 @@ DEPENDENCIES
   mocha
   rake
   rspec
+
+BUNDLED WITH
+   1.11.2
