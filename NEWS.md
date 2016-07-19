@@ -1,3 +1,12 @@
+## 0.5.2 (2016-07-19)
+
+* Ensure we move hidden files from an unzipped archive (#24)
+* Drop Travis tests on Ruby 1.9 versions
+    - The version of `net-ssh` that is installed requires Ruby >= 2.0.0
+* Switch to container-based Travis tests
+* RuboCop cleanup
+    - Whitespace, some unnecessary else clauses, add config to be more forgiving of line lengths
+
 ## 0.5.1 (2016-03-22)
 
 * Loosen Capistrano version pin
