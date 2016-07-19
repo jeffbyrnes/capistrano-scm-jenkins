@@ -1,3 +1,7 @@
+## 0.5.1 (2016-03-22)
+
+* Loosen Capistrano version pin
+
 ## 0.5.0 (2014-11-11)
 
 * Clean up some Ruby code, thanks to RuboCop
