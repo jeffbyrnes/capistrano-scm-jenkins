@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.version       = CapistranoScmJenkins::VERSION
   s.authors       = ['LI Daobing', 'Jeff Byrnes']
   s.email         = ['lidaobing@gmail.com', 'jeff@evertrue.com']
-  s.summary       = %q{Use Jenkins as a Capistrano 3.x SCM.}
-  s.description   = %q{Capistrano 3.x plugin to deploy Jenkins artifacts.}
+  s.summary       = 'Use Jenkins as a Capistrano 3.x SCM.'
+  s.description   = 'Capistrano 3.x plugin to deploy Jenkins artifacts.'
   s.homepage      = "https://github.com/lidaobing/#{s.name}"
   s.license       = 'MIT'
 

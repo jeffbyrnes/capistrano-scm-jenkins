@@ -11,21 +11,13 @@ require 'json'
 class Capistrano::Jenkins < Capistrano::SCM
   def jenkins_user
     @jenkins_user ||= begin
-      if fetch(:jenkins_user)
-        fetch(:jenkins_user)
-      else
-        nil
-      end
+      fetch(:jenkins_user) if fetch(:jenkins_user)
     end
   end
 
   def jenkins_pass
     @jenkins_pass ||= begin
-      if fetch(:jenkins_pass)
-        fetch(:jenkins_pass)
-      else
-        nil
-      end
+      fetch(:jenkins_pass) if fetch(:jenkins_pass)
     end
   end
 

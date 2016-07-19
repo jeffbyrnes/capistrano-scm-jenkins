@@ -1,5 +1,4 @@
 namespace :jenkins do
-
   def strategy
     @strategy ||= Capistrano::Jenkins.new(
       self,
