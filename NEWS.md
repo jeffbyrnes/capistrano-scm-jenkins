@@ -1,5 +1,9 @@
 ## 0.5.2 (2016-07-19)
 
+### YANKED
+
+The Fix for #24 broke things
+
 * Ensure we move hidden files from an unzipped archive (#24)
 * Drop Travis tests on Ruby 1.9 versions
     - The version of `net-ssh` that is installed requires Ruby >= 2.0.0
