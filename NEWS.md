@@ -1,3 +1,7 @@
+## 0.5.3 (2016-07-19)
+
+* Try solving #24 using a janky `bash` based solution
+
 ## 0.5.2 (2016-07-19)
 
 ### YANKED
