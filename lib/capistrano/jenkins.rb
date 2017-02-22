@@ -72,7 +72,7 @@ class Capistrano::Jenkins < Capistrano::SCM
   end
 
   def artifact_build_number_opt
-    fetch(:jenkins_build_number, 'lastBuild')
+    fetch(:jenkins_build_number, 'lastSuccessfulBuild')
   end
 
   def artifact_build_number
