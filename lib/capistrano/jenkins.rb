@@ -1,4 +1,6 @@
-load File.expand_path('../tasks/jenkins.rake', __FILE__)
+# frozen_string_literal: true
+
+load File.expand_path('tasks/jenkins.rake', __dir__)
 
 require 'capistrano/scm'
 require 'open-uri'
@@ -11,13 +13,13 @@ require 'json'
 class Capistrano::Jenkins < Capistrano::SCM
   def jenkins_user
     @jenkins_user ||= begin
-      fetch(:jenkins_user) if fetch(:jenkins_user)
+      fetch(:jenkins_user)
     end
   end
 
   def jenkins_pass
     @jenkins_pass ||= begin
-      fetch(:jenkins_pass) if fetch(:jenkins_pass)
+      fetch(:jenkins_pass)
     end
   end
 
@@ -105,9 +107,7 @@ class Capistrano::Jenkins < Capistrano::SCM
 
       if allowed_statuses.include? build_status
         if artifact_is_zip?
-          unless test! 'hash unzip 2>/dev/null'
-            abort 'unzip required, but not found'
-          end
+          abort 'unzip required, but not found' unless test! 'hash unzip 2>/dev/null'
         end
 
         true

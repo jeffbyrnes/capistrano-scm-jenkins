@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 namespace :jenkins do
   def strategy
     @strategy ||= Capistrano::Jenkins.new(
       self,
-      fetch(:jenkins_strategy, Capistrano::Jenkins::DefaultStrategy))
+      fetch(:jenkins_strategy, Capistrano::Jenkins::DefaultStrategy)
+    )
   end
 
   desc 'Check that Jenkins is reachable & the last build is green'

@@ -1,5 +1,6 @@
-# coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+# frozen_string_literal: true
+
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'capistrano-scm-jenkins/version'
 
@@ -23,7 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'capistrano', '~> 3.2'
 
   s.add_development_dependency 'bundler', '~> 1.5'
+  s.add_development_dependency 'mocha'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'mocha'
 end
