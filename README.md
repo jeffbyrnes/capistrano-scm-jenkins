@@ -1,4 +1,4 @@
-# Capistrano::Jenkins
+# Capistrano::SCM::Jenkins
 
 [![Build Status](https://secure.travis-ci.org/lidaobing/capistrano-scm-jenkins.png?branch=master)](http://travis-ci.org/lidaobing/capistrano-scm-jenkins) [![Gem Version](https://badge.fury.io/rb/capistrano-scm-jenkins.png)](http://badge.fury.io/rb/capistrano-scm-jenkins) [![Dependency Status](https://gemnasium.com/lidaobing/capistrano-scm-jenkins.png)](https://gemnasium.com/lidaobing/capistrano-scm-jenkins)
 
@@ -27,13 +27,18 @@ $ gem install capistrano-scm-jenkins
 
 ## Usage
 
-In your `Capfile`, you’ll need to `require 'capistrano-scm-jenkins`.
+In your `Capfile`:
+
+```ruby
+require 'capistrano-scm-jenkins'
+install_plugin Capistrano::SCM::Jenkins
+```
 
 A sample `config/deploy.rb`:
 
 ```ruby
 set :application, 'my-sweet-app'
-set :repo_url, 'http://my.jenkins.install/job/my-sweet-app'
+set :repo_url, 'https://my.jenkins.install/job/my-sweet-app'
 set :deploy_to, "/home/#{fetch(:user)}/#{fetch(:application)}"
 
 # Jenkins username & password
@@ -52,7 +57,7 @@ set :jenkins_pass, 'pass'
 # Deploy a specific build number
 # set(:jenkins_build_number, ENV['REVISION']) if ENV['REVISION']
 #
-# Bypass SSL verification
+# Bypass SSL verification, e.g., when using self-signed certificates
 # set :jenkins_insecure, true
 ```
 
@@ -61,7 +66,7 @@ set :jenkins_pass, 'pass'
 For a Maven module, you should include the module name in the `:repo_url`:
 
 ```ruby
-set :repo_url,  "http://jenkins.example.com/job/example/com.example.helloworld$helloworld/"
+set :repo_url, 'http://jenkins.example.com/job/example/com.example.helloworld$helloworld/'
 ```
 
 ## Contributing
