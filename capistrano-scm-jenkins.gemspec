@@ -7,11 +7,11 @@ require 'capistrano-scm-jenkins/version'
 Gem::Specification.new do |s|
   s.name          = 'capistrano-scm-jenkins'
   s.version       = CapistranoScmJenkins::VERSION
-  s.authors       = ['LI Daobing', 'Jeff Byrnes']
-  s.email         = ['lidaobing@gmail.com', 'jeff@evertrue.com']
+  s.authors       = ['Li Daobing', 'Jeff Byrnes']
+  s.email         = ['lidaobing@gmail.com', 'thejeffbyrnes@gmail.com']
   s.summary       = 'Use Jenkins as a Capistrano 3.x SCM.'
   s.description   = 'Capistrano 3.x plugin to deploy Jenkins artifacts.'
-  s.homepage      = "https://github.com/lidaobing/#{s.name}"
+  s.homepage      = "https://github.com/jeffbyrnes/#{s.name}"
   s.license       = 'MIT'
 
   s.rubyforge_project = 'capistrano-scm-jenkins'

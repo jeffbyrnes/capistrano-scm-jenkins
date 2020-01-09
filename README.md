@@ -66,7 +66,7 @@ set :repo_url,  "http://jenkins.example.com/job/example/com.example.helloworld$h
 
 ## Contributing
 
-1. Fork it ( http://github.com/evertrue/capistrano-scm-jenkins/fork )
+1. Fork it ( http://github.com/jeffbyrnes/capistrano-scm-jenkins/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
