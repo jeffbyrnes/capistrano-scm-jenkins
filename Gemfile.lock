@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    capistrano-scm-jenkins (0.5.3)
+    capistrano-scm-jenkins (0.6.0.pre.1)
       capistrano (~> 3.2)
 
 GEM
@@ -42,7 +42,6 @@ GEM
 
 PLATFORMS
   ruby
-  x86-mingw32
 
 DEPENDENCIES
   bundler
@@ -52,4 +51,4 @@ DEPENDENCIES
   rspec
 
 BUNDLED WITH
-   1.17.3
+   2.1.4
