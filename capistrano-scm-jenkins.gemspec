@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'capistrano', '~> 3.2'
 
-  s.add_development_dependency 'bundler', '~> 1.5'
+  s.add_development_dependency 'bundler'
   s.add_development_dependency 'mocha'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
