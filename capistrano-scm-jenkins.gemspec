@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
-lib = File.expand_path('lib', __dir__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'capistrano-scm-jenkins/version'
-
 Gem::Specification.new do |s|
   s.name          = 'capistrano-scm-jenkins'
-  s.version       = CapistranoScmJenkins::VERSION
+  s.version       = '0.5.3'
   s.authors       = ['Li Daobing', 'Jeff Byrnes']
   s.email         = ['lidaobing@gmail.com', 'thejeffbyrnes@gmail.com']
   s.summary       = 'Use Jenkins as a Capistrano 3.x SCM.'
